@@ -69,6 +69,21 @@ public class GUI extends JFrame {
 			@Override
 			public void windowClosing(WindowEvent arg0) {
 				if (client != null) {
+					int answer = JOptionPane.showConfirmDialog(null,
+							"Do you want to commit?", "Information",
+							JOptionPane.YES_NO_OPTION);
+					if (answer == 0) {
+						if (client.commit()) {
+							JOptionPane.showMessageDialog(null,
+									"Commit successful!", "Information",
+									JOptionPane.INFORMATION_MESSAGE);
+						} else {
+							JOptionPane.showMessageDialog(null,
+									"Commit failled!", "Error",
+									JOptionPane.ERROR_MESSAGE);
+						}
+					}
+
 					client.close();
 				}
 			}
@@ -80,10 +95,47 @@ public class GUI extends JFrame {
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
+		JMenu mnManager = new JMenu("Manager");
+		menuBar.add(mnManager);
+
+		JMenuItem mntmCommit = new JMenuItem("Commit");
+		mntmCommit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (client.commit()) {
+					JOptionPane.showMessageDialog(null, "Commit successful!",
+							"Information", JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					JOptionPane.showMessageDialog(null, "Commit failled!",
+							"Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		mnManager.add(mntmCommit);
+
+		JMenuItem mntmRollback = new JMenuItem("Rollback");
+		mntmRollback.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (client.rollback()) {
+					JOptionPane.showMessageDialog(null, "Rollback successful!",
+							"Information", JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					JOptionPane.showMessageDialog(null, "Rollback failled!",
+							"Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		mnManager.add(mntmRollback);
+
 		JMenu mnRequest = new JMenu("Request");
 		menuBar.add(mnRequest);
 
 		JMenuItem mntmCustomizedRequest = new JMenuItem("Customized request");
+		mntmCustomizedRequest.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String request = JOptionPane.showInputDialog(null, "What is your request?", "Information", JOptionPane.INFORMATION_MESSAGE);
+				sendQuery(request);
+			}
+		});
 		mnRequest.add(mntmCustomizedRequest);
 
 		JMenu mnDeliverable = new JMenu("Deliverable 2");

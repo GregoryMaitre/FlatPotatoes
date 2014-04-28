@@ -46,22 +46,26 @@ public class Client {
 	/**
 	 * Commit change to the database
 	 */
-	public void commit() {
+	public boolean commit() {
 		try {
 			connection.commit();
+			return true;
 		} catch (SQLException e) {
 			System.err.println("Error when commit");
 		}
+		return false;
 	}
 
 	/**
 	 * Undo all change until last commit
 	 */
-	public void rollback() {
+	public boolean rollback() {
 		try {
 			connection.rollback();
+			return true;
 		} catch (SQLException e) {
 			System.err.println("Error when commit");
+			return false;
 		}
 	}
 
