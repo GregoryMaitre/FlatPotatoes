@@ -132,7 +132,9 @@ public class GUI extends JFrame {
 		JMenuItem mntmCustomizedRequest = new JMenuItem("Customized request");
 		mntmCustomizedRequest.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String request = JOptionPane.showInputDialog(null, "What is your request?", "Information", JOptionPane.INFORMATION_MESSAGE);
+				String request = JOptionPane.showInputDialog(null,
+						"What is your request?", "Information",
+						JOptionPane.INFORMATION_MESSAGE);
 				sendQuery(request);
 			}
 		});
@@ -212,6 +214,9 @@ public class GUI extends JFrame {
 		// Client code
 		client = new Client();
 		if (!client.connect()) {
+			JOptionPane.showMessageDialog(null,
+					"Unable to connect to the database", "Error",
+					JOptionPane.ERROR_MESSAGE);
 			System.err.println("Unable to connect!");
 			System.exit(0);
 		}
