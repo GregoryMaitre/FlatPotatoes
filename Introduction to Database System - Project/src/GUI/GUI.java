@@ -23,11 +23,16 @@ import Connection.Query;
 import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
+import javax.swing.table.DefaultTableModel;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+
+import javax.swing.JTable;
+
+import com.sun.xml.internal.ws.api.streaming.XMLStreamReaderFactory.Default;
 
 /**
  * TODO: Comment this class
@@ -38,10 +43,11 @@ import java.awt.event.WindowEvent;
 public class GUI extends JFrame {
 
 	private JPanel contentPane;
-	private DefaultListModel<String> listModel;
+	private DefaultTableModel tableModel;
 	private Client client;
 
 	private Query currentQuery;
+	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -184,7 +190,7 @@ public class GUI extends JFrame {
 		mntmMore.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if ((currentQuery != null) && (!currentQuery.isClosed())) {
-					currentQuery.printResult(listModel);
+					currentQuery.printResult(tableModel);
 				} else {
 					JOptionPane.showMessageDialog(null,
 							"No more data to show!", "Information",
@@ -200,16 +206,10 @@ public class GUI extends JFrame {
 
 		JScrollPane scrollPane = new JScrollPane();
 		contentPane.add(scrollPane, BorderLayout.CENTER);
-
-		listModel = new DefaultListModel<String>();
-
-		JList list = new JList(listModel);
-		list.addListSelectionListener(new ListSelectionListener() {
-			public void valueChanged(ListSelectionEvent arg0) {
-				// TODO: Afficher les details de la ligne
-			}
-		});
-		scrollPane.setViewportView(list);
+		
+		tableModel = new DefaultTableModel();
+		table = new JTable(tableModel);
+		scrollPane.setViewportView(table);
 
 		// Client code
 		client = new Client();
@@ -223,10 +223,12 @@ public class GUI extends JFrame {
 	}
 
 	public void sendQuery(String query) {
-		listModel.clear();
+		tableModel.getDataVector().removeAllElements();
+		tableModel.fireTableDataChanged();
+		
 		currentQuery = client.query(query);
 		if (currentQuery != null) {
-			currentQuery.printResult(listModel);
+			currentQuery.printResult(tableModel);
 		} else {
 			JOptionPane.showMessageDialog(null, "Invalid query : " + query,
 					"Error", JOptionPane.ERROR_MESSAGE);

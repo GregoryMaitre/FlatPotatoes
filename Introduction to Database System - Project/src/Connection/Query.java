@@ -5,8 +5,11 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Vector;
 
 import javax.swing.DefaultListModel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  * TODO: Comment this class
@@ -25,6 +28,9 @@ public class Query {
 	// Use to display a part of the results
 	private int count = 100;
 	private boolean closed = false;
+	
+	private Vector<Vector<String>> dataList;
+	private Vector<String> header;
 
 	public Query(String query) {
 		this.query = query;
@@ -37,33 +43,33 @@ public class Query {
 
 		// Usefull data from the result
 		resultMetaData = result.getMetaData();
+		
+		header = new Vector<String>();
+		dataList = new Vector<Vector<String>>();
+		
+		for (int i = 1; i <= resultMetaData.getColumnCount(); i++) {
+			header.add(resultMetaData.getColumnName(i));
+		}
 	}
 	
 	public boolean isClosed() {
 		return closed;
 	}
 	
-	public void printResult(DefaultListModel<String> list) {
+	public void printResult(DefaultTableModel table) {
 		
 		count = 100;
 		try {
-			
-			String head = "";
-			for (int i = 1; i <= resultMetaData.getColumnCount(); i++) {
-				head += resultMetaData.getColumnName(i) + ", ";
-			}
-
-			list.addElement(head);
-
-			String row = "";
 			while ((count > 0) && result.next()) {
 				count--;
+				Vector<String> data = new Vector<String>();
 				for (int i = 1; i <= resultMetaData.getColumnCount(); i++) {
-					row += result.getObject(i).toString() + ", ";
+					data.add(result.getObject(i).toString());
 				}
-				list.addElement(row);
-				row = "";
+				dataList.add(data);
 			}
+			
+			table.setDataVector(dataList, header);
 			
 			if (count > 0) {
 				close();
