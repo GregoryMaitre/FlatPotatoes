@@ -148,6 +148,7 @@ public class GUI extends JFrame {
 				if (!searchWindow.isVisible()) {
 					if (isConnected()) {
 						searchWindow.beVisible(client);
+						GUI.this.setEnabled(false);
 					}
 				}
 			}
@@ -211,7 +212,7 @@ public class GUI extends JFrame {
 		scrollPane.addMouseWheelListener(new MouseWheelListener() {
 			public void mouseWheelMoved(MouseWheelEvent arg0) {
 				JScrollBar bar = scrollPane.getVerticalScrollBar();
-				if (isCurrentQuery() && (bar.getValue() + bar.getHeight() > bar.getMaximum() * 0.66)) {
+				if (isCurrentQuery() && (bar.getValue() + bar.getHeight() > bar.getMaximum() * 0.75)) {
 					more();
 				}
 			}
@@ -234,7 +235,7 @@ public class GUI extends JFrame {
 			System.exit(0);
 		}
 		
-		searchWindow = new SearchWindow();
+		searchWindow = new SearchWindow(this);
 	}
 
 	public void sendQuery(String query) {
