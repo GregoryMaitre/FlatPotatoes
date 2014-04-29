@@ -41,6 +41,7 @@ public class GUI extends JFrame {
 
 	private Query currentQuery;
 	private JTable table;
+	private SearchWindow searchWindow;
 
 	/**
 	 * Launch the application.
@@ -140,6 +141,18 @@ public class GUI extends JFrame {
 				sendQuery(request);
 			}
 		});
+		
+		JMenuItem mntmSearch = new JMenuItem("Search");
+		mntmSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (!searchWindow.isVisible()) {
+					if (isConnected()) {
+						searchWindow.beVisible(client);
+					}
+				}
+			}
+		});
+		mnRequest.add(mntmSearch);
 		mnRequest.add(mntmCustomizedRequest);
 
 		JMenu mnDeliverable = new JMenu("Deliverable 2");
@@ -198,7 +211,7 @@ public class GUI extends JFrame {
 		scrollPane.addMouseWheelListener(new MouseWheelListener() {
 			public void mouseWheelMoved(MouseWheelEvent arg0) {
 				JScrollBar bar = scrollPane.getVerticalScrollBar();
-				if (isCurrentQuery() && (bar.getValue() > bar.getMaximum() * 0.66)) {
+				if (isCurrentQuery() && (bar.getValue() + bar.getHeight() > bar.getMaximum() * 0.66)) {
 					more();
 				}
 			}
@@ -207,6 +220,8 @@ public class GUI extends JFrame {
 
 		tableModel = new DefaultTableModel();
 		table = new JTable(tableModel);
+		table.setColumnSelectionAllowed(true);
+		table.setCellSelectionEnabled(true);
 		scrollPane.setViewportView(table);
 
 		// Client code
@@ -218,6 +233,8 @@ public class GUI extends JFrame {
 			System.err.println("Unable to connect!");
 			System.exit(0);
 		}
+		
+		searchWindow = new SearchWindow();
 	}
 
 	public void sendQuery(String query) {
@@ -251,5 +268,9 @@ public class GUI extends JFrame {
 	
 	private boolean isCurrentQuery() {
 		return (currentQuery != null) && (!currentQuery.isClosed());
+	}
+	
+	private boolean isConnected() {
+		return (client != null) && client.isConnected();
 	}
 }

@@ -39,6 +39,10 @@ public class Client {
 		}
 		return connected;
 	}
+	
+	public boolean isConnected() {
+		return connected;
+	}
 
 	/**
 	 * Commit change to the database
