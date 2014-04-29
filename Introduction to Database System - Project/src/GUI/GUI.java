@@ -2,37 +2,30 @@ package GUI;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 
-import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
-import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import Connection.Client;
 import Connection.Information;
 import Connection.Query;
 
-import javax.swing.JScrollPane;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.table.DefaultTableModel;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-
-import javax.swing.JTable;
-
-import com.sun.xml.internal.ws.api.streaming.XMLStreamReaderFactory.Default;
+import java.awt.event.MouseWheelListener;
+import java.awt.event.MouseWheelEvent;
 
 /**
  * TODO: Comment this class
@@ -68,6 +61,9 @@ public class GUI extends JFrame {
 	/**
 	 * Create the frame.
 	 * 
+	 * @throws SQLException
+	 */
+	/**
 	 * @throws SQLException
 	 */
 	public GUI() throws SQLException {
@@ -189,13 +185,7 @@ public class GUI extends JFrame {
 		JMenuItem mntmMore = new JMenuItem("More");
 		mntmMore.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if ((currentQuery != null) && (!currentQuery.isClosed())) {
-					currentQuery.printResult(tableModel);
-				} else {
-					JOptionPane.showMessageDialog(null,
-							"No more data to show!", "Information",
-							JOptionPane.INFORMATION_MESSAGE);
-				}
+				more();
 			}
 		});
 		mnData.add(mntmMore);
@@ -204,9 +194,17 @@ public class GUI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 
-		JScrollPane scrollPane = new JScrollPane();
+		final JScrollPane scrollPane = new JScrollPane();
+		scrollPane.addMouseWheelListener(new MouseWheelListener() {
+			public void mouseWheelMoved(MouseWheelEvent arg0) {
+				JScrollBar bar = scrollPane.getVerticalScrollBar();
+				if (isCurrentQuery() && (bar.getValue() > bar.getMaximum() * 0.66)) {
+					more();
+				}
+			}
+		});
 		contentPane.add(scrollPane, BorderLayout.CENTER);
-		
+
 		tableModel = new DefaultTableModel();
 		table = new JTable(tableModel);
 		scrollPane.setViewportView(table);
@@ -223,15 +221,35 @@ public class GUI extends JFrame {
 	}
 
 	public void sendQuery(String query) {
+
+		if (isCurrentQuery()) {
+			currentQuery.close();
+			currentQuery = null;
+		}
+
+		tableModel.setColumnCount(0);
 		tableModel.getDataVector().removeAllElements();
 		tableModel.fireTableDataChanged();
-		
+
 		currentQuery = client.query(query);
-		if (currentQuery != null) {
+		if (isCurrentQuery()) {
 			currentQuery.printResult(tableModel);
 		} else {
 			JOptionPane.showMessageDialog(null, "Invalid query : " + query,
 					"Error", JOptionPane.ERROR_MESSAGE);
 		}
+	}
+
+	private void more() {
+		if (isCurrentQuery()) {
+			currentQuery.printResult(tableModel);
+		} else {
+			JOptionPane.showMessageDialog(null, "No more data to show!",
+					"Information", JOptionPane.INFORMATION_MESSAGE);
+		}
+	}
+	
+	private boolean isCurrentQuery() {
+		return (currentQuery != null) && (!currentQuery.isClosed());
 	}
 }
