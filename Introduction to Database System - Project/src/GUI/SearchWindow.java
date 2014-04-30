@@ -19,7 +19,9 @@ import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 
 import Connection.Client;
+
 import javax.swing.JCheckBox;
+
 import java.awt.Window.Type;
 
 /**
@@ -246,11 +248,14 @@ public class SearchWindow extends JFrame {
 						"Information", JOptionPane.INFORMATION_MESSAGE);
 				return;
 			} else {
-				searchRequest = selectPart() + " " + fromPart();
+				searchRequest = selectPart() + " " + fromPart() + " WHERE "
+						+ whereLinkPart();
 			}
 		} else {
 			searchRequest = selectPart() + " " + fromPart() + " " + wherePart();
 		}
+
+		System.out.println(searchRequest);
 
 		gui.sendQuery(searchRequest);
 
@@ -275,15 +280,20 @@ public class SearchWindow extends JFrame {
 
 	private String selectPart() {
 		String select = "SELECT ";
-		select += getValue(artistNameTextArea, chckbxArtist,
-				"artist.name, artist.type, artist.gender, ");
+		select += getValue(
+				artistNameTextArea,
+				chckbxArtist,
+				"artist.name AS \"Artist name\", artist.type AS \"Artist type\", artist.gender AS \"Artist gender\", ");
 		select += getValue(genreTextArea, chckbxGenre,
-				"genre.name, genre.count, ");
-		select += getValue(areaTextArea, chckbxArea, "area.name, area.type, ");
+				"genre.name AS \"Genre name\", genre.count AS \"Genre count\", ");
+		select += getValue(areaTextArea, chckbxArea,
+				"area.name AS \"Area name\", area.type AS \"Area type\", ");
 		select += getValue(recordingTextArea, chckbxRecording,
-				"recording.name, recording.length, ");
-		select += getValue(releaseTextArea, chckbxRelease, "release.name, ");
-		select += getValue(mediumTextArea, chckbxMedium, "medium.format, ");
+				"recording.name AS \"Recording name\", recording.length AS \"Recording length\", ");
+		select += getValue(releaseTextArea, chckbxRelease,
+				"release.name AS \"Release name\", ");
+		select += getValue(mediumTextArea, chckbxMedium,
+				"medium.format AS \"Medium format\", ");
 
 		select = select.substring(0, select.length() - 2);
 
@@ -291,20 +301,24 @@ public class SearchWindow extends JFrame {
 	}
 
 	private String fromPart() {
-		String from = "FROM ";
-		from += getValue(artistNameTextArea, chckbxArtist, "Artist artist, ");
-		from += getValue(genreTextArea, chckbxGenre, "Genre genre, ");
-		from += getValue(areaTextArea, chckbxArea, "Area area, ");
-		from += getValue(recordingTextArea, chckbxRecording,
-				"Recording recording, ");
-		from += getValue(releaseTextArea, chckbxRelease, "Release release, ");
-		from += getValue(mediumTextArea, chckbxMedium, "Medium medium, ");
-		// TODO: from +=
-		// "Artist_track artist_track, Track track, Artist_genre artist_genre";
-
-		from = from.substring(0, from.length() - 2);
-
-		return from;
+		/*
+		 * String from = "FROM "; from += getValue(artistNameTextArea,
+		 * chckbxArtist, "Artist artist, "); from += getValue(genreTextArea,
+		 * chckbxGenre, "Genre genre, "); from += getValue(areaTextArea,
+		 * chckbxArea, "Area area, "); from += getValue(recordingTextArea,
+		 * chckbxRecording, "Recording recording, "); from +=
+		 * getValue(releaseTextArea, chckbxRelease, "Release release, "); from
+		 * += getValue(mediumTextArea, chckbxMedium, "Medium medium, "); //
+		 * TODO: from += //
+		 * "Artist_track artist_track, Track track, Artist_genre artist_genre" ;
+		 * 
+		 * from = from.substring(0, from.length() - 2);
+		 * 
+		 * return from;
+		 */
+		return "FROM Artist artist, Genre genre, Area area, Recording recording, "
+				+ "Release release, Medium medium, Artist_track artist_track, Track track, "
+				+ "Artist_genre artist_genre";
 	}
 
 	private String wherePart() {
@@ -322,9 +336,18 @@ public class SearchWindow extends JFrame {
 		where += getValue(mediumTextArea, null, "medium.format = '"
 				+ mediumTextArea.getText() + "' and ");
 
-		where = where.substring(0, where.length() - 5);
+		where += whereLinkPart();
+
+		//where = where.substring(0, where.length() - 5);
 
 		return where;
+	}
+
+	private String whereLinkPart() {
+		return "area.ID = artist.area_ID and artist.ID = artist_genre.artist_ID "
+				+ "and artist_genre.genre_ID = genre.ID and artist.ID = artist_track.artist_ID "
+				+ "and artist_track.track_ID = track.ID and track.recording_ID = recording.ID "
+				+ "and track.medium_ID = medium.ID and medium.release_ID = release.ID";
 	}
 
 	private String getValue(JTextArea textArea, JCheckBox checkBox, String value) {
