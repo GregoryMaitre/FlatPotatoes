@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import oracle.jdbc.OracleDriver;
 
 /**
- * TODO: Comment this class
+ * This class contains method to connect and send query to the database
  * 
  * @author Gregory Maitre & Patrick Andrade & Beaud Guillaume
  * 
@@ -17,10 +17,20 @@ public class Client {
 	private boolean connected = false;
 	private Connection connection;
 
+	/**
+	 * Constructor: create the driver
+	 * 
+	 * @throws SQLException
+	 */
 	public Client() throws SQLException {
 		DriverManager.registerDriver(new OracleDriver());
 	}
 
+	/**
+	 * Try to connect to the database
+	 * 
+	 * @return true, if we are connected
+	 */
 	public boolean connect() {
 		if (!connected) {
 			try {
@@ -40,6 +50,11 @@ public class Client {
 		return connected;
 	}
 	
+	/**
+	 * Test if we are connected
+	 * 
+	 * @return true, if we are connected
+	 */
 	public boolean isConnected() {
 		return connected;
 	}
@@ -73,7 +88,7 @@ public class Client {
 	/**
 	 * Close the connection
 	 * 
-	 * @return
+	 * @return true, if we are disconnected
 	 */
 	public boolean close() {
 		if (connected) {
@@ -85,9 +100,15 @@ public class Client {
 			}
 			connected = false;
 		}
-		return connected;
+		return !connected;
 	}
 
+	/**
+	 * Create and send the query to the database
+	 * 
+	 * @param queryString the query
+	 * @return the query object that contains the answer
+	 */
 	public Query query(String queryString) {
 		Query query = null;
 		try {

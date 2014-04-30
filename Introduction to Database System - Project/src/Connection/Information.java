@@ -1,7 +1,7 @@
 package Connection;
 
 /**
- * TODO: Comment this class
+ * This class contains usefull information about the database, request, ...
  * 
  * @author Gregory Maitre & Patrick Andrade & Beaud Guillaume
  * 

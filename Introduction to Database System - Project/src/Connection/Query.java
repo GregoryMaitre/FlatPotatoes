@@ -10,7 +10,7 @@ import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
 
 /**
- * TODO: Comment this class
+ * This class contains method to manipulate the query and the answer from the database
  * 
  * @author Gregory Maitre & Patrick Andrade & Beaud Guillaume
  * 
@@ -30,10 +30,21 @@ public class Query {
 	private Vector<Vector<String>> dataList;
 	private Vector<String> header;
 
+	/**
+	 * Constructor
+	 * 
+	 * @param query the query to be send
+	 */
 	public Query(String query) {
 		this.query = query;
 	}
 
+	/**
+	 * Send the query to the database and get the result
+	 * 
+	 * @param connection the connection between the database and the client
+	 * @throws SQLException
+	 */
 	public void send(Connection connection) throws SQLException {
 		// Create the query and send it
 		statement = connection.createStatement();
@@ -50,10 +61,20 @@ public class Query {
 		}
 	}
 	
+	/**
+	 * Test if there are any data in the answer
+	 * 
+	 * @return true if there are no data in the answer
+	 */
 	public boolean isClosed() {
 		return closed;
 	}
 	
+	/**
+	 * Print the result in the table
+	 * 
+	 * @param table the table where we want to print
+	 */
 	public void printResult(DefaultTableModel table) {
 		
 		count = 100;
@@ -77,6 +98,9 @@ public class Query {
 		}
 	}
 
+	/**
+	 * Close the query, that is close the result and the statement
+	 */
 	public void close() {
 		try {
 			result.close();

@@ -12,6 +12,13 @@ import Connection.Query;
  * 
  */
 public class ConnectAndSelect {
+	
+	/**
+	 * Test if we can send a query
+	 * 
+	 * @param args
+	 * @throws SQLException
+	 */
 	public static void main(String[] args) throws SQLException {
 		Client client = new Client();
 		if (client.connect()) {

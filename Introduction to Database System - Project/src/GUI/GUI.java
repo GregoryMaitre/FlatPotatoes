@@ -35,6 +35,7 @@ import java.awt.event.MouseWheelEvent;
  */
 public class GUI extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private DefaultTableModel tableModel;
 	private Client client;
@@ -45,6 +46,8 @@ public class GUI extends JFrame {
 
 	/**
 	 * Launch the application.
+	 * 
+	 * @param args
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -62,9 +65,6 @@ public class GUI extends JFrame {
 	/**
 	 * Create the frame.
 	 * 
-	 * @throws SQLException
-	 */
-	/**
 	 * @throws SQLException
 	 */
 	public GUI() throws SQLException {
@@ -138,13 +138,13 @@ public class GUI extends JFrame {
 				String request = JOptionPane.showInputDialog(null,
 						"What is your request?", "Information",
 						JOptionPane.INFORMATION_MESSAGE);
-				
+
 				if (request != null) {
 					sendQuery(request);
 				}
 			}
 		});
-		
+
 		JMenuItem mntmSearch = new JMenuItem("Search");
 		mntmSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -215,7 +215,8 @@ public class GUI extends JFrame {
 		scrollPane.addMouseWheelListener(new MouseWheelListener() {
 			public void mouseWheelMoved(MouseWheelEvent arg0) {
 				JScrollBar bar = scrollPane.getVerticalScrollBar();
-				if (isCurrentQuery() && (bar.getValue() + bar.getHeight() > bar.getMaximum() * 0.75)) {
+				if (isCurrentQuery()
+						&& (bar.getValue() + bar.getHeight() > bar.getMaximum() * 0.75)) {
 					more();
 				}
 			}
@@ -237,10 +238,15 @@ public class GUI extends JFrame {
 			System.err.println("Unable to connect!");
 			System.exit(0);
 		}
-		
+
 		searchWindow = new SearchWindow(this);
 	}
 
+	/**
+	 * Send a query to the database
+	 * 
+	 * @param query
+	 */
 	public void sendQuery(String query) {
 
 		if (isCurrentQuery()) {
@@ -261,6 +267,9 @@ public class GUI extends JFrame {
 		}
 	}
 
+	/**
+	 * Print more data from the answer of the query
+	 */
 	private void more() {
 		if (isCurrentQuery()) {
 			currentQuery.printResult(tableModel);
@@ -269,11 +278,21 @@ public class GUI extends JFrame {
 					"Information", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
-	
+
+	/**
+	 * Test if the query and the result are close
+	 * 
+	 * @return true, if the query isn't close
+	 */
 	private boolean isCurrentQuery() {
 		return (currentQuery != null) && (!currentQuery.isClosed());
 	}
-	
+
+	/**
+	 * Test if we are connected to the database
+	 * 
+	 * @return true, if we are connected to the database
+	 */
 	private boolean isConnected() {
 		return (client != null) && client.isConnected();
 	}
