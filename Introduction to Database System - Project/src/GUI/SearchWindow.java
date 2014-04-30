@@ -20,6 +20,7 @@ import javax.swing.border.EmptyBorder;
 
 import Connection.Client;
 import javax.swing.JCheckBox;
+import java.awt.Window.Type;
 
 /**
  * TODO: Comment this class
@@ -36,7 +37,6 @@ public class SearchWindow extends JFrame {
 	private JTextArea recordingTextArea;
 	private JTextArea releaseTextArea;
 	private JTextArea mediumTextArea;
-	private Client currentClient;
 	private GUI gui;
 	private JCheckBox chckbxArtist;
 	private JCheckBox chckbxGenre;
@@ -58,9 +58,7 @@ public class SearchWindow extends JFrame {
 				SearchWindow.this.gui.setEnabled(true);
 			}
 		});
-
-		setAlwaysOnTop(true);
-		setType(Type.UTILITY);
+		setType(Type.POPUP);
 		setTitle("Search");
 		setBounds(100, 100, 597, 413);
 		setVisible(false);
@@ -235,25 +233,27 @@ public class SearchWindow extends JFrame {
 		scrollPane_5.setViewportView(mediumTextArea);
 	}
 
-	public void beVisible(Client client) {
-		currentClient = client;
+	public void beVisible() {
 		setVisible(true);
 	}
 
 	private void send() {
+		String searchRequest = null;
 		if (isAllEmpty()) {
-			JOptionPane.showMessageDialog(null,
-					"Please enter something to be searched!", "Information",
-					JOptionPane.INFORMATION_MESSAGE);
-			return;
+			if (allUnselected()) {
+				JOptionPane.showMessageDialog(null,
+						"Please enter something to be searched!",
+						"Information", JOptionPane.INFORMATION_MESSAGE);
+				return;
+			} else {
+				searchRequest = selectPart() + " " + fromPart();
+			}
+		} else {
+			searchRequest = selectPart() + " " + fromPart() + " " + wherePart();
 		}
-
-		String searchRequest = selectPart() + " " + fromPart() + " "
-				+ wherePart();
 
 		gui.sendQuery(searchRequest);
 
-		currentClient = null;
 		setVisible(false);
 		gui.setEnabled(true);
 	}
@@ -265,6 +265,12 @@ public class SearchWindow extends JFrame {
 				&& (recordingTextArea.getText().length() == 0)
 				&& (releaseTextArea.getText().length() == 0)
 				&& (mediumTextArea.getText().length() == 0);
+	}
+
+	private boolean allUnselected() {
+		return !chckbxArea.isSelected() && !chckbxArtist.isSelected()
+				&& !chckbxGenre.isSelected() && !chckbxMedium.isSelected()
+				&& !chckbxRecording.isSelected() && !chckbxRelease.isSelected();
 	}
 
 	private String selectPart() {

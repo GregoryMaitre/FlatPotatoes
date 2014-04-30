@@ -138,7 +138,10 @@ public class GUI extends JFrame {
 				String request = JOptionPane.showInputDialog(null,
 						"What is your request?", "Information",
 						JOptionPane.INFORMATION_MESSAGE);
-				sendQuery(request);
+				
+				if (request != null) {
+					sendQuery(request);
+				}
 			}
 		});
 		
@@ -147,7 +150,7 @@ public class GUI extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				if (!searchWindow.isVisible()) {
 					if (isConnected()) {
-						searchWindow.beVisible(client);
+						searchWindow.beVisible();
 						GUI.this.setEnabled(false);
 					}
 				}
