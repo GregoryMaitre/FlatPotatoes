@@ -9,6 +9,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
@@ -18,16 +19,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 
-import Connection.Client;
-
-import javax.swing.JCheckBox;
-
-import java.awt.Window.Type;
-
 /**
  * TODO: Comment this class
  * 
- * @author Gregory Maitre & Patrick Andrade
+ * @author Gregory Maitre & Patrick Andrade & Beaud Guillaume
  * 
  */
 public class SearchWindow extends JFrame {
@@ -254,8 +249,6 @@ public class SearchWindow extends JFrame {
 		} else {
 			searchRequest = selectPart() + " " + fromPart() + " " + wherePart();
 		}
-
-		System.out.println(searchRequest);
 
 		gui.sendQuery(searchRequest);
 

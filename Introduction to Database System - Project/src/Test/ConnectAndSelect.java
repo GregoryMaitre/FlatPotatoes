@@ -8,7 +8,7 @@ import Connection.Query;
 /**
  * TODO: Comment this class
  * 
- * @author Gregory Maitre & Patrick Andrade
+ * @author Gregory Maitre & Patrick Andrade & Beaud Guillaume
  * 
  */
 public class ConnectAndSelect {
