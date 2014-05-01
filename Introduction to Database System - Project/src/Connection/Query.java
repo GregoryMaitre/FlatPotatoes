@@ -83,7 +83,8 @@ public class Query {
 				count--;
 				Vector<String> data = new Vector<String>();
 				for (int i = 1; i <= resultMetaData.getColumnCount(); i++) {
-					data.add(result.getObject(i).toString());
+					Object res = result.getObject(i);
+					data.add( res == null ? "NULL" : res.toString());
 				}
 				dataList.add(data);
 			}
