@@ -273,7 +273,7 @@ public class SearchWindow extends JFrame {
 	}
 
 	private String selectPart() {
-		String select = "SELECT ";
+		String select = "SELECT DISTINCT ";
 		select += getValue(
 				artistNameTextArea,
 				chckbxArtist,
@@ -331,8 +331,6 @@ public class SearchWindow extends JFrame {
 				+ mediumTextArea.getText() + "' and ");
 
 		where += whereLinkPart();
-
-		//where = where.substring(0, where.length() - 5);
 
 		return where;
 	}
