@@ -168,26 +168,62 @@ public class GUI extends JFrame {
 
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem(
 				"Print the names of areas with the highest number male artists, female artists and groups, as well as the number of artists of each type in each of the three areas");
+		mntmNewMenuItem_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String query = Information.NAME_AREA_HIGHEST_MALE_FEMALE_GROUPS;
+				sendQuery(query);
+			}
+		});
 		mnDeliverable.add(mntmNewMenuItem_1);
 
 		JMenuItem mntmListTheNames = new JMenuItem(
 				"List the names of 10 groups with the most recorded tracks");
+		mntmListTheNames.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String query = Information.NAME_10_GROUPS_MOST_TRACKS;
+				sendQuery(query);
+			}
+		});
 		mnDeliverable.add(mntmListTheNames);
 
 		JMenuItem mntmListTheNames_1 = new JMenuItem(
 				"List the names of 10 groups with the most releases");
+		mntmListTheNames_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String query = Information.NAME_10_GROUPS_MOST_RELEASES;
+				sendQuery(query);
+			}
+		});
 		mnDeliverable.add(mntmListTheNames_1);
 
 		JMenuItem mntmPrintTheName = new JMenuItem(
 				"Print the name of a female artist associated with the most genres");
+		mntmPrintTheName.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String query = Information.NAME_FEMALE_ARTIST_MOST_GENRES;
+				sendQuery(query);
+			}
+		});
 		mnDeliverable.add(mntmPrintTheName);
 
 		JMenuItem mntmListAllCities = new JMenuItem(
 				"List all cities which have more female than male artists");
+		mntmListAllCities.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String query = Information.ALL_CITIES_MORE_FEMALE_THAN_MALE_ARTISTS;
+				sendQuery(query);
+			}
+		});
 		mnDeliverable.add(mntmListAllCities);
 
 		JMenuItem mntmListTheReleases = new JMenuItem(
 				"List the releases with the highest number of tracks");
+		mntmListTheReleases.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String query = Information.RELEASES_HIGHEST_NUMBER_TRACKS;
+				sendQuery(query);
+			}
+		});
 		mnDeliverable.add(mntmListTheReleases);
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
