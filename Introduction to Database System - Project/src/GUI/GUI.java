@@ -22,6 +22,7 @@ import javax.swing.table.DefaultTableModel;
 
 import Connection.Client;
 import Connection.Information;
+import Connection.InsertDelete;
 import Connection.Query;
 
 import java.awt.event.MouseWheelListener;
@@ -43,6 +44,7 @@ public class GUI extends JFrame {
 	private Query currentQuery;
 	private JTable table;
 	private SearchWindow searchWindow;
+	private InsertDeleteWindow insertDeleteWindow;
 
 	/**
 	 * Launch the application.
@@ -157,6 +159,15 @@ public class GUI extends JFrame {
 			}
 		});
 		mnRequest.add(mntmSearch);
+		
+		JMenuItem mntmInsert = new JMenuItem("Insert/Delete");
+		mntmInsert.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				insertDeleteWindow.beVisible();
+				GUI.this.setEnabled(false);
+			}
+		});
+		mnRequest.add(mntmInsert);
 		mnRequest.add(mntmCustomizedRequest);
 
 		JMenu mnDeliverable = new JMenu("Deliverable 2");
@@ -276,6 +287,7 @@ public class GUI extends JFrame {
 		}
 
 		searchWindow = new SearchWindow(this);
+		insertDeleteWindow = new InsertDeleteWindow(this);
 	}
 
 	/**
@@ -301,6 +313,18 @@ public class GUI extends JFrame {
 			JOptionPane.showMessageDialog(null, "Invalid query : " + query,
 					"Error", JOptionPane.ERROR_MESSAGE);
 		}
+	}
+	
+	public void sendInsertDelete(String insertDelete) {
+		InsertDelete request = client.insertDelete(insertDelete);
+		if (request != null) {
+			JOptionPane.showMessageDialog(null, request.getStatus(),
+					"Information", JOptionPane.INFORMATION_MESSAGE);
+		} else {
+			JOptionPane.showMessageDialog(null, "Invalid insert or delete: " + insertDelete,
+					"Error", JOptionPane.ERROR_MESSAGE);
+		}
+		
 	}
 
 	/**

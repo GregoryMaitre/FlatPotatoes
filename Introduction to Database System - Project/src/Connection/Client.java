@@ -120,4 +120,16 @@ public class Client {
 		}
 		return query;
 	}
+	
+	public InsertDelete insertDelete(String insertDeleteString) {
+		InsertDelete insertDelete = null;
+		try {
+			insertDelete = new InsertDelete(insertDeleteString);
+			insertDelete.send(connection);
+		} catch (SQLException e) {
+			System.err.println("Error when inserting or deleting " + Information.URL_DATABASE);
+			insertDelete = null;
+		}
+		return insertDelete;
+	}
 }
