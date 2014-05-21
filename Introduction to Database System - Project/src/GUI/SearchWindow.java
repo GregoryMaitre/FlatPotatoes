@@ -273,7 +273,7 @@ public class SearchWindow extends JFrame {
 	}
 
 	private String selectPart() {
-		String select = "SELECT DISTINCT ";
+		String select = "SELECT ";//DISTINCT ";
 		select += getValue(
 				artistNameTextArea,
 				chckbxArtist,

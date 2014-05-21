@@ -159,7 +159,7 @@ public class GUI extends JFrame {
 			}
 		});
 		mnRequest.add(mntmSearch);
-		
+
 		JMenuItem mntmInsert = new JMenuItem("Insert/Delete");
 		mntmInsert.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -181,7 +181,7 @@ public class GUI extends JFrame {
 				"Print the names of areas with the highest number male artists, female artists and groups, as well as the number of artists of each type in each of the three areas");
 		mntmNewMenuItem_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String query = Information.NAME_AREA_HIGHEST_MALE_FEMALE_GROUPS;
+				String query = Information.B;
 				sendQuery(query);
 			}
 		});
@@ -191,7 +191,7 @@ public class GUI extends JFrame {
 				"List the names of 10 groups with the most recorded tracks");
 		mntmListTheNames.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String query = Information.NAME_10_GROUPS_MOST_TRACKS;
+				String query = Information.C;
 				sendQuery(query);
 			}
 		});
@@ -201,8 +201,11 @@ public class GUI extends JFrame {
 				"List the names of 10 groups with the most releases");
 		mntmListTheNames_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String query = Information.NAME_10_GROUPS_MOST_RELEASES;
-				sendQuery(query);
+				if (sendCreateView(Information.D_V)) {
+					sendQuery(Information.D);
+				} else {
+					JOptionPane.showMessageDialog(null, "Error when trying to send request", "Error", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
 		mnDeliverable.add(mntmListTheNames_1);
@@ -211,7 +214,7 @@ public class GUI extends JFrame {
 				"Print the name of a female artist associated with the most genres");
 		mntmPrintTheName.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String query = Information.NAME_FEMALE_ARTIST_MOST_GENRES;
+				String query = Information.E;
 				sendQuery(query);
 			}
 		});
@@ -221,7 +224,7 @@ public class GUI extends JFrame {
 				"List all cities which have more female than male artists");
 		mntmListAllCities.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String query = Information.ALL_CITIES_MORE_FEMALE_THAN_MALE_ARTISTS;
+				String query = Information.F;
 				sendQuery(query);
 			}
 		});
@@ -231,14 +234,181 @@ public class GUI extends JFrame {
 				"List the releases with the highest number of tracks");
 		mntmListTheReleases.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String query = Information.RELEASES_HIGHEST_NUMBER_TRACKS;
+				String query = Information.G;
 				sendQuery(query);
 			}
 		});
 		mnDeliverable.add(mntmListTheReleases);
+
+		JMenu mnDeliverable_1 = new JMenu("Deliverable 3");
+		mnRequest.add(mnDeliverable_1);
+
+		JMenuItem mntmForEachArea = new JMenuItem(
+				"For each area that has more than 30 artists, list the male artist, the female artist and the group with the most tracks recorded");
+		mntmForEachArea.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (sendCreateView(Information.H_V1)
+						&& sendCreateView(Information.H_V2)
+						&& sendCreateView(Information.H_V3)
+						&& sendCreateView(Information.H_V4)
+						&& sendCreateView(Information.H_V5)) {
+					sendQuery(Information.H);
+				} else {
+					JOptionPane.showMessageDialog(null, "Error when trying to send request", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		mnDeliverable_1.add(mntmForEachArea);
+
+		JMenuItem mntmAmericanMetalGroup = new JMenuItem(
+				"American metal group Metallica is asking its fans to choose the setlist for its upcoming concert in Switzerland. Assuming that the Metallica fans will choose the songs that have appeared on the highest number of mediums, list the top 25 songs.");
+		mntmAmericanMetalGroup.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (sendCreateView(Information.I_V1)
+						&& sendCreateView(Information.I_V2)) {
+					sendQuery(Information.I);
+				} else {
+					JOptionPane.showMessageDialog(null, "Error when trying to send request", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		mnDeliverable_1.add(mntmAmericanMetalGroup);
+
+		JMenuItem mntmNewMenuItem_2 = new JMenuItem(
+				"For each of the 10 genres with the most artists, list the female artist that has recorded the highest number of tracks");
+		mntmNewMenuItem_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (sendCreateView(Information.J_V1)
+						&& sendCreateView(Information.J_V2)
+						&& sendCreateView(Information.J_V3)
+						&& sendCreateView(Information.J_V4)) {
+					sendQuery(Information.J);
+				} else {
+					JOptionPane.showMessageDialog(null, "Error when trying to send request", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		mnDeliverable_1.add(mntmNewMenuItem_2);
+
+		JMenuItem mntmListAllGenres = new JMenuItem(
+				"List all genres that have no female artists, all genres that have no male artists and all genres that have no groups");
+		mntmListAllGenres.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (sendCreateView(Information.K_V1)
+						&& sendCreateView(Information.K_V2)
+						&& sendCreateView(Information.K_V3)) {
+					sendQuery(Information.K);
+				} else {
+					JOptionPane.showMessageDialog(null, "Error when trying to send request", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		mnDeliverable_1.add(mntmListAllGenres);
+
+		JMenuItem mntmForEachArea_1 = new JMenuItem(
+				"For each area with more than 10 groups, list the 5 male artists that have recorded the highest number of tracks");
+		mntmForEachArea_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (sendCreateView(Information.L_V1)
+						&& sendCreateView(Information.L_V2)
+						&& sendCreateView(Information.L_V3)
+						&& sendCreateView(Information.L_V4)) {
+					sendQuery(Information.L);
+				} else {
+					JOptionPane.showMessageDialog(null, "Error when trying to send request", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		mnDeliverable_1.add(mntmForEachArea_1);
+
+		JMenuItem mntmListThe = new JMenuItem(
+				"List the 10 groups with the highest number of tracks that appear on compilations. A compilation is a medium that contains tracks associated with more than one artist");
+		mntmListThe.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (sendCreateView(Information.M_V1)
+						&& sendCreateView(Information.M_V2)) {
+					sendQuery(Information.M);
+				} else {
+					JOptionPane.showMessageDialog(null, "Error when trying to send request", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		mnDeliverable_1.add(mntmListThe);
+
+		JMenuItem mntmListTheTop = new JMenuItem(
+				"List the top 10 releases with the most collaborations, i.e., releases where one artist is performing all songs and the highest number of different guest artists contribute to the album");
+		mntmListTheTop.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				sendQuery(Information.N);
+			}
+		});
+		mnDeliverable_1.add(mntmListTheTop);
+
+		JMenuItem mntmNewMenuItem_3 = new JMenuItem(
+				"List the release which is associated with the most mediums. If there are more than one such release, list all such releases");
+		mntmNewMenuItem_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (sendCreateView(Information.O_V)) {
+					sendQuery(Information.M);
+				} else {
+					JOptionPane.showMessageDialog(null, "Error when trying to send request", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		mnDeliverable_1.add(mntmNewMenuItem_3);
+
+		JMenuItem mntmNewMenuItem_4 = new JMenuItem(
+				"List the most popular genre among the groups which are associated with at least 3 genres");
+		mntmNewMenuItem_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (sendCreateView(Information.P_V)) {
+					sendQuery(Information.P);
+				} else {
+					JOptionPane.showMessageDialog(null, "Error when trying to send request", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		mnDeliverable_1.add(mntmNewMenuItem_4);
+
+		JMenuItem mntmNewMenuItem_5 = new JMenuItem(
+				"List the 5 titles that are associated with the most different songs (recordings) along with the number of songs that share such title");
+		mntmNewMenuItem_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				sendQuery(Information.Q);
+			}
+		});
+		mnDeliverable_1.add(mntmNewMenuItem_5);
+
+		JMenuItem mntmListTheTop_1 = new JMenuItem(
+				"List the top 10 artists according to their track-to-release ratio. This ratio is computed by dividing the number of tracks an artist is associated with by the number of releases this artist has contributed a track to");
+		mntmListTheTop_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (sendCreateView(Information.R_V1)
+						&& sendCreateView(Information.R_V2)) {
+					sendQuery(Information.R);
+				} else {
+					JOptionPane.showMessageDialog(null, "Error when trying to send request", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		mnDeliverable_1.add(mntmListTheTop_1);
+
+		JMenuItem mntmNewMenuItem_6 = new JMenuItem(
+				"The concert hit index is a measure of probability that the artist can attract enough fans to fill a football stadium. We define the \u201Chit artist\u201D as one that has more than 10 songs that appear on more than 100 mediums and measure \"hit ability\" as the average number of mediums that a top 10 song appears on. List all \u201Chit artists\u201D according to their \"hit ability\"");
+		mntmNewMenuItem_6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (sendCreateView(Information.S_V1)
+						&& sendCreateView(Information.S_V2)) {
+					sendQuery(Information.S);
+				} else {
+					JOptionPane.showMessageDialog(null, "Error when trying to send request", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		mnDeliverable_1.add(mntmNewMenuItem_6);
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String query = Information.NAMES_OF_ARTISTS_FROM_SWITZERLAND;
+				String query = Information.A;
 				sendQuery(query);
 			}
 		});
@@ -314,17 +484,22 @@ public class GUI extends JFrame {
 					"Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
-	
+
+	public boolean sendCreateView(String createView) {
+		return client.insertDelete(createView) != null;
+
+	}
+
 	public void sendInsertDelete(String insertDelete) {
 		InsertDelete request = client.insertDelete(insertDelete);
 		if (request != null) {
 			JOptionPane.showMessageDialog(null, request.getStatus(),
 					"Information", JOptionPane.INFORMATION_MESSAGE);
 		} else {
-			JOptionPane.showMessageDialog(null, "Invalid insert or delete: " + insertDelete,
-					"Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Invalid insert or delete: "
+					+ insertDelete, "Error", JOptionPane.ERROR_MESSAGE);
 		}
-		
+
 	}
 
 	/**
