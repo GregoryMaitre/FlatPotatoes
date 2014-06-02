@@ -204,7 +204,9 @@ public class GUI extends JFrame {
 				if (sendCreateView(Information.D_V)) {
 					sendQuery(Information.D);
 				} else {
-					JOptionPane.showMessageDialog(null, "Error when trying to send request", "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null,
+							"Error when trying to send request", "Error",
+							JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -254,7 +256,9 @@ public class GUI extends JFrame {
 						&& sendCreateView(Information.H_V5)) {
 					sendQuery(Information.H);
 				} else {
-					JOptionPane.showMessageDialog(null, "Error when trying to send request", "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null,
+							"Error when trying to send request", "Error",
+							JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -268,7 +272,9 @@ public class GUI extends JFrame {
 						&& sendCreateView(Information.I_V2)) {
 					sendQuery(Information.I);
 				} else {
-					JOptionPane.showMessageDialog(null, "Error when trying to send request", "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null,
+							"Error when trying to send request", "Error",
+							JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -284,7 +290,9 @@ public class GUI extends JFrame {
 						&& sendCreateView(Information.J_V4)) {
 					sendQuery(Information.J);
 				} else {
-					JOptionPane.showMessageDialog(null, "Error when trying to send request", "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null,
+							"Error when trying to send request", "Error",
+							JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -299,7 +307,9 @@ public class GUI extends JFrame {
 						&& sendCreateView(Information.K_V3)) {
 					sendQuery(Information.K);
 				} else {
-					JOptionPane.showMessageDialog(null, "Error when trying to send request", "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null,
+							"Error when trying to send request", "Error",
+							JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -311,11 +321,12 @@ public class GUI extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				if (sendCreateView(Information.L_V1)
 						&& sendCreateView(Information.L_V2)
-						&& sendCreateView(Information.L_V3)
-						&& sendCreateView(Information.L_V4)) {
+						&& sendCreateView(Information.L_V3)) {
 					sendQuery(Information.L);
 				} else {
-					JOptionPane.showMessageDialog(null, "Error when trying to send request", "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null,
+							"Error when trying to send request", "Error",
+							JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -329,7 +340,9 @@ public class GUI extends JFrame {
 						&& sendCreateView(Information.M_V2)) {
 					sendQuery(Information.M);
 				} else {
-					JOptionPane.showMessageDialog(null, "Error when trying to send request", "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null,
+							"Error when trying to send request", "Error",
+							JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -339,7 +352,7 @@ public class GUI extends JFrame {
 				"List the top 10 releases with the most collaborations, i.e., releases where one artist is performing all songs and the highest number of different guest artists contribute to the album");
 		mntmListTheTop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				sendQuery(Information.N);
+				JOptionPane.showMessageDialog(null, Information.N, "Information", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		mnDeliverable_1.add(mntmListTheTop);
@@ -351,7 +364,9 @@ public class GUI extends JFrame {
 				if (sendCreateView(Information.O_V)) {
 					sendQuery(Information.M);
 				} else {
-					JOptionPane.showMessageDialog(null, "Error when trying to send request", "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null,
+							"Error when trying to send request", "Error",
+							JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -364,7 +379,9 @@ public class GUI extends JFrame {
 				if (sendCreateView(Information.P_V)) {
 					sendQuery(Information.P);
 				} else {
-					JOptionPane.showMessageDialog(null, "Error when trying to send request", "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null,
+							"Error when trying to send request", "Error",
+							JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -387,7 +404,9 @@ public class GUI extends JFrame {
 						&& sendCreateView(Information.R_V2)) {
 					sendQuery(Information.R);
 				} else {
-					JOptionPane.showMessageDialog(null, "Error when trying to send request", "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null,
+							"Error when trying to send request", "Error",
+							JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -401,7 +420,9 @@ public class GUI extends JFrame {
 						&& sendCreateView(Information.S_V2)) {
 					sendQuery(Information.S);
 				} else {
-					JOptionPane.showMessageDialog(null, "Error when trying to send request", "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null,
+							"Error when trying to send request", "Error",
+							JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -496,8 +517,9 @@ public class GUI extends JFrame {
 			JOptionPane.showMessageDialog(null, request.getStatus(),
 					"Information", JOptionPane.INFORMATION_MESSAGE);
 		} else {
-			JOptionPane.showMessageDialog(null, "Invalid insert or delete: "
-					+ insertDelete, "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null,
+					"Duplicate row with same primary keys", "Error",
+					JOptionPane.ERROR_MESSAGE);
 		}
 
 	}

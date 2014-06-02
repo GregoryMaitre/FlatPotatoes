@@ -150,26 +150,20 @@ public class Information {
 			+ "FROM genre genres WHERE genres.id NOT IN (SELECT ag.genre_id FROM artist_genre ag, artist group_artists WHERE group_artists.type='Group' "
 			+ "AND group_artists.id=ag.artist_id GROUP BY ag.genre_id))";
 	
-	// L: TODO: A corriger TODO:
-	public final static String L = "SELECT areas2.name, artists2.name FROM (SELECT aat.areas AS areas, "
-			+ "aat.artists AS artists, aat.tracks_count AS tracks_count, row_number() over (partition BY aat.areas order by aat.tracks_count DESC) AS RN "
-			+ "FROM area_artist_trackscount aat), artist artists2, area areas2 WHERE areas2.id=areas AND artists2.id=artists "
-			+ "AND RN <=5";
+	// L:
+	public final static String L = "SELECT areas.name AS area_name, male_with_most_tracks.male_name FROM male_with_most_tracks, area areas "
+			+ "WHERE areas.id =male_with_most_tracks.areaid";
 	
-	public final static String L_V1 = "CREATE OR REPLACE VIEW areas_more_10_groups AS (SELECT artists.area_id AS areaid FROM artist artists "
-			+ "WHERE artists.type='Group' GROUP BY artists.area_id HAVING COUNT(artists.id)>=10)";
+	public final static String L_V1 = "CREATE OR REPLACE VIEW areas_more10 AS (SELECT artists1.area_id FROM artist artists1 WHERE artists1.type='Group' "
+			+ "GROUP BY artists1.area_id HAVING COUNT(*) > 10)";
 	
-	public final static String L_V2 = "CREATE OR REPLACE VIEW areas_male AS (SELECT areas_more_10_groups.area_id AS areas, "
-			+ "artists.id  AS artists FROM areas_more_10_groups, artist artists WHERE artists.area_id = areas_more_10_groups.area_id "
-			+ "AND artists.gender    ='Male')";
+	public final static String L_V2 = "CREATE OR REPLACE VIEW artist_tracks_count AS (SELECT artr.artist_id AS art_id, COUNT(artr.track_id) AS tracks_count "
+			+ "FROM artist_track artr GROUP BY artr.artist_id)";
 	
-	public final static String L_V3 = "CREATE OR REPLACE VIEW males_tracks_count AS (SELECT artr.artist_id AS art_id, "
-			+ "COUNT(artr.track_id) AS tracks_count FROM artist_track artr, artist males WHERE artr.artist_id=males.id "
-			+ "AND males.gender='Male' GROUP BY artr.artist_id)";
-	
-	public final static String L_V4 = "CREATE OR REPLACE VIEW area_artist_trackscount AS (SELECT areas_male.areas AS areas, "
-			+ "areas_male.artists AS artists, males_tracks_count.tracks_count AS tracks_count FROM areas_male, males_tracks_count "
-			+ "WHERE areas_male.artists=males_tracks_count.art_id)";
+	public final static String L_V3 = "CREATE OR REPLACE VIEW male_with_most_tracks AS (SELECT areaid, male_name FROM (SELECT am10.area_id AS areaid, "
+			+ "male_artist.name AS male_name, atc_male.tracks_count, row_number() over (partition BY am10.area_id order by atc_male.tracks_count DESC) AS RN_male "
+			+ "FROM areas_more10 am10, artist_tracks_count atc_male, artist male_artist WHERE male_artist.area_id=am10.area_id AND male_artist.id=atc_male.art_id "
+			+ "AND male_artist.gender='Male') WHERE RN_male<=5)";
 
 	// M:
 	public final static String M = "SELECT artists.name FROM (SELECT artist_id AS art, COUNT(track_id) AS tracks_on_comp "
@@ -181,9 +175,9 @@ public class Information {
 	
 	public final static String M_V2 = "CREATE OR REPLACE VIEW groups AS (SELECT arttr.artist_id, arttr.track_id FROM artist artists, "
 			+ "artist_track arttr WHERE artists.type='Group' AND artists.id=arttr.artist_id)";
-	// N: TODO: A FAIRE
-	public final static String N = "";
-
+	
+	// N:
+	public final static String N = "Not implemented";
 	// O:
 	public final static String O = "SELECT mediums2.release_id FROM medium mediums2, max_meds GROUP BY mediums2.release_id "
 			+ "HAVING COUNT(*)=(SELECT max_meds.med_count FROM max_meds)";

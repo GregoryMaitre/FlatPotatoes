@@ -26,6 +26,10 @@ import javax.swing.border.EmptyBorder;
  */
 public class InsertDeleteWindow extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JRadioButtonMenuItem rdbtnmntmInsert;
 	private JMenuItem rdbtnmntmDelete;
